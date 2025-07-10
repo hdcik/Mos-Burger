@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Product Pge Nave -->
+    <nav>
+        <div id="main_logo">
+            <div id="main_logo_row">
+                <img id="main_logo_image" src="" alt="Main Logo">
+            </div>
+            <!-- Product Page Main Hedder -->
+            <div id="main_nav_row">
+                <a id="product_page_link" href="product__details.html">Product</a>
+                <a id="order_page_link" href="order__details.html">Order</a>
+                <a id="item_page_link" href="item__details.html">Item</a>
+                <a id="customer_page_link" href="item__details.html">Customer</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Page Main Seccrion  -->
+
+
+
+    <div id="main_section">
+        <div id="main_section_row">
+
+            <!-- Product Page Main Catogory List  -->
+
+            <div id="main_category_section_col_1">
+
+                <div id="main_category_section_col">
+                    <button id="all_category_button" data-category="all">
+                        All
+                    </button>
+
+                    <button id="all_category_button" data-category="burgers">
+                        Burgers
+                    </button>
+                    <button id="all_category_button" data-category="friesAndSides">
+                        Fries & Sides
+                    </button>
+                    <button id="all_category_button" data-category="drinks">
+                        Drinks
+                    </button>
+                    <button id="all_category_button" data-category="desserts">
+                        Desserts
+                    </button>
+                    <button id="all_category_button" data-category="kidsMenu">
+                        Kids Menu
+                    </button>
+                    <button id="all_category_button" data-category="saladsAndWraps">
+                        Salads & Wraps
+                    </button>
+
+                </div>
+
+                <!-- Search Bar  -->
+                <div>
+
+                    <input id="serchBarInput" type="text" placeholder="Search Product">
+                    <i class="fas fa-ice-cream me-1"></i>
+                </div>
+            </div>
+
+            <!-- Main Product List Item  -->
+
+            <div id="main_product_list">
+                <div id="mainProductList">
+                </div>
+            </div>
+
+            <!-- Order Date And Order Id -->
+
+            <div id="order_dat_and_id_conainer">
+                <div id="order_dat_and_id_row">
+                    <div id="order_dat_col">
+                        <span id="order_date_title"> Date :- </span>
+                        <span id="order_date"></span>
+                    </div>
+                    <!-- Order Id -->
+                    <div id="order_id_col">
+                        <span id="order_id_title">Order Id :-</span>
+                        <span id="order_id"></span>
+                    </div>
+                </div>
+
+                <hr>
+                <!-- Add Customer Details Input  -->
+                <div id="customer_datailse_get">
+                    <h2 id="add_customer_title"> Customer Information </h2>
+
+                    <div id="input_phoneNumber_row">
+                        <input id="input_phoneNumber" type="text" name="" placeholder="Mobile Number">
+                    </div>
+
+                    <div id="input_name_row">
+                        <input id="input_name" type="text" name="" placeholder="Customer Name">
+                    </div>
+
+                    <div id="input_address_row">
+                        <input id="input_address" type="text" name="" placeholder="Address">
+                    </div>
+
+                    <div id="input_email_row">
+                        <input id="input_email" type="email" name="" placeholder="Email">
+                    </div>
+                </div>
+
+                <!-- Add Customer And Clear Button -->
+                <div id="add_customer_and_clear_button_row">
+                    <input id="add_new_customer_button" type="button" value="Add Customer" onclick="addNewCustomer()">
+                    <input id="customer_clear" type="button" value="Clear" onclick="Clear">
+                </div>
+            </div>
+
+            <!-- Customer Choice Item -->
+
+            <div id="customer_choice_item">
+
+            </div>
+
+            <!-- Totale And Checkout -->
+
+            <div id="totale_and_checkout">
+                <hr>
+                <dir id="total_count_col">
+                    <span id="totale_text">Total :</span>
+                    <span id="totale_count">LKR 0.00</span>
+                </dir>
+
+                <hr>
+
+                <div id="checkout_main" >
+                    <button id="checkout_button" onclick="placeCheckout()" >
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
