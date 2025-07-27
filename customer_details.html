@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <!-- Customer Info Section -->
+        <div class="customer_details_get">
+            <h2 id="add_customer_title">Customer Information</h2>
+
+            <label for="inputCustomerID" class="visually-hidden">Customer ID</label>
+            <input type="text" id="inputCustomerID" placeholder="Customer ID" readonly />
+
+            <label for="inputPhoneNumber" class="visually-hidden">Mobile Number</label>
+            <input id="inputPhoneNumber" type="text" placeholder="Mobile Number" list="phoneList" />
+            <datalist id="phoneList"></datalist>
+
+            <label for="inputName" class="visually-hidden">Customer Name</label>
+            <input id="inputName" type="text" placeholder="Customer Name" />
+
+            <label for="inputAddress" class="visually-hidden">Address</label>
+            <input id="inputAddress" type="text" placeholder="Address" />
+
+            <label for="inputEmail" class="visually-hidden">Email</label>
+            <input id="inputEmail" type="email" placeholder="Email" />
+        </div>
+
+        <!-- Customer Buttons -->
+        <div class="add_customer_and_clear_button_row mt-2">
+            <div class="add_customer_and_clear_button_row">
+                <input id="add_new_customer_button" type="button" value="Add Customer" onclick="addNewCustomer()">
+                <input id="customer_clear" type="button" value="Clear" onclick="Clear()">
+            </div>
+
+            <!-- Temporary Customer Display List -->
+            <ul id="tempCustomerList" style="margin-top: 10px; list-style: none; padding-left: 0;"></ul>
+        </div>
+    </div>
+
+    <div class="customer_datails_table_container">
+        <div class="customer_datails_row">
+            <div class="customer_datails_col">
+            </div>
+            <div class="customerViewEditDeleteCol">
+                <details id="customerViewEditDeleteDetails">
+                    <summary id="customerViewEditDeleteSummary">Customer
+                    </summary>
+                    <button id="customerVeiwButton" onclick="customerView()">View</button>
+                    <br>
+                    <button id="customerEditButton" onclick="customerEdit()">Edit</button>
+                    <br>
+                    <button id="customerDeleteButton" onclick="customerDelete()">Delete</button>
+                </details>
+            </div>
+
+            <div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="customer_details.js"></script>
+</body>
+
+</html>

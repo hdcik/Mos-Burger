@@ -1,3 +1,4 @@
+// ================================
 // Load or init data
 let customers = [];
 let orders = [];
@@ -5,8 +6,6 @@ let tempDiscounts = [];
 let mainDiscounts = [];
 let tempSelectItem = [];
 let tempCustomer = null;
-
-// Local Storage Set Data 
 
 function saveAllData() {
   localStorage.setItem('customers', JSON.stringify(customers));
@@ -20,9 +19,6 @@ function saveAllData() {
     localStorage.removeItem('tempCustomer');
   }
 }
-
-// Local Storage Get Data 
-
 
 function loadAllData() {
   try {
@@ -50,9 +46,8 @@ function loadAllData() {
   } catch { tempCustomer = null; }
 }
 
-
-// Default Products List
-
+// ================================
+// Default Products
 let mainProductList = JSON.parse(localStorage.getItem('mainProductList')) || [
   { name: "Classic Beef Burger", price: 850.00, discount: 5, Qty: 12, category: "burgers", image: "" },
   { name: "Spicy Chicken Burger", price: 750.00, discount: 0, Qty: 2, category: "burgers", image: "" },
@@ -68,13 +63,12 @@ let mainProductList = JSON.parse(localStorage.getItem('mainProductList')) || [
 ];
 localStorage.setItem('mainProductList', JSON.stringify(mainProductList));
 
-// Get mainProductList Name And Discount
-
+// Map product discounts for quick lookup
 const productDiscounts = {};
 mainProductList.forEach(p => productDiscounts[p.name] = p.discount || 0);
 
-// Order ID And Cust Id  Generator
-
+// ================================
+// Util Functions
 function generateCustomerId() {
   return 'CUST-' + Date.now();
 }
@@ -83,13 +77,13 @@ function generateOrderId() {
   return 'ORD-' + Date.now();
 }
 
-// Check  customer Order (Old Customer )
-
+// Check if customer has any orders
 function hasOrder(customerId) {
   return orders.some(order => order.customerId === customerId);
 }
 
-// Loarde Product Display 
+// ================================
+// Product display and filter
 
 let tempCategory = 'all';
 let searchTerm = '';
@@ -113,8 +107,6 @@ function displayCategoryList(items) {
   });
 }
 
-// Search product list and filter category
-
 function filterAndDisplay() {
   let filtered = mainProductList;
 
@@ -128,64 +120,32 @@ function filterAndDisplay() {
 }
 
 // ================================
-
 // Add product to order
 
 function addOrderFunction(name, price) {
-  const product = mainProductList.find(p => p.name === name);
-  if (!product || product.Qty <= 0) {
-    alert("This product is out of stock.");
-    return;
-  }
-  
-  // perchers කරන ප්‍රමාණය අඩු කිරීමට 
-
-  product.Qty -= 1;
-
   const existing = tempSelectItem.find(i => i.name === name);
   if (existing) existing.qty++;
   else tempSelectItem.push({ name, price, qty: 1 });
-
   saveAllData();
   addOrderDisplay();
-  filterAndDisplay(); 
 }
 
-// perchers කරන ප්‍රමාණය වැඩි කිරීමට  
-
+// Increase quantity
 function increasingQty(index) {
-  const item = tempSelectItem[index];
-  const product = mainProductList.find(p => p.name === item.name);
-
-  if (product && product.Qty > 0) {
-    item.qty++;
-    product.Qty--;
-    saveAllData();
-    addOrderDisplay();
-    filterAndDisplay();
-  } else {
-    alert("No more stock available for this product.");
-  }
+  tempSelectItem[index].qty++;
+  saveAllData();
+  addOrderDisplay();
 }
 
 // Reduce quantity or remove
-
 function reductionQty(index) {
-  const item = tempSelectItem[index];
-  const product = mainProductList.find(p => p.name === item.name);
-
-  if (item.qty > 1) {
-    item.qty--;
-    product.Qty++;
-  } else {
-    tempSelectItem.splice(index, 1);
-    product.Qty++;
-  }
+  if (tempSelectItem[index].qty > 1) tempSelectItem[index].qty--;
+  else tempSelectItem.splice(index, 1);
   saveAllData();
   addOrderDisplay();
-  filterAndDisplay();
 }
 
+// ================================
 // Display order list and calculate discounts
 
 function getDiscountForPhone(phone) {
@@ -274,22 +234,10 @@ function addOrderDisplay() {
 }
 
 function getOldCustomerOrderId(phone) {
-  const customer = customers.find(c => c.phone === phone);
-  if (!customer) return null;
-
-  const order = orders.find(o => o.customerId === customer.id);
-  return order ? order.id : null;
+  const order = orders.find(order => order.customerPhone === phone);
+  return order ? order.orderId : null;
 }
-
-function getAllOrderIdsForCustomer(phone) {
-  const customer = customers.find(c => c.phone === phone);
-  if (!customer) return [];
-
-  return orders
-    .filter(o => o.customerId === customer.id)
-    .map(o => o.id);
-}
-
+// ================================
 // Customer phone input check
 
 function checkPhoneNumberCustomer() {
@@ -320,7 +268,6 @@ function checkPhoneNumberCustomer() {
 
     if (customer) {
       tempCustomer = {
-        id: customer.id,
         name: customer.name,
         phone: customer.phone,
         address: customer.address,
@@ -365,7 +312,7 @@ function checkPhoneNumberCustomer() {
   renderTempCustomer();
 }
 
-
+// ================================
 // Discount input change handler
 
 function onDiscountInputChange() {
@@ -388,7 +335,7 @@ function onDiscountInputChange() {
   }
 }
 
-
+// ================================
 // Add new customer (temporary until order placed)
 
 function addNewCustomer() {
@@ -465,250 +412,247 @@ function tempOldOrderId(orderId) {
   }
   return displyOrderId;
 }
-// ================================
-// Render temp customer list
+  // ================================
+  // Render temp customer list
 
-function renderTempCustomer() {
-  const tempList = document.getElementById('tempCustomerList');
-  if (!tempList) return;
-
-  tempList.innerHTML = '';
-  if (tempCustomer) {
-    const orderIds = getAllOrderIdsForCustomer(tempCustomer.phone);
-    const latestOrderId = orderIds.length > 0 ? orderIds[orderIds.length - 1] : 'No Order ID';
-
-    const li = document.createElement('li');
-    li.textContent = `${tempCustomer.name} - ${tempCustomer.phone} - ${tempCustomer.address} - Customer ID: ${tempCustomer.id} - Last Order ID: ${latestOrderId}`;
-    li.style.padding = "5px 10px";
-    li.style.border = "1px solid #ddd";
-    li.style.marginTop = "5px";
-    tempList.appendChild(li);
-  }
-}
+  function renderTempCustomer() {
+    const tempList = document.getElementById('tempCustomerList');
+    if (!tempList) return;
 
 
-// Clear inputs and temp data
+    tempList.innerHTML = '';
+    if (tempCustomer) {
+      const li = document.createElement('li');
 
-function Clear() {
-  document.getElementById("inputPhoneNumber").value = '';
-  document.getElementById("inputName").value = '';
-  document.getElementById("inputAddress").value = '';
-  document.getElementById("inputEmail").value = '';
-  const discountField = document.getElementById("inputDiscount");
-  if (discountField) {
-    discountField.value = '';
-    discountField.disabled = false;
-  }
-  document.getElementById("inputCustomerID").value = '';
-  tempCustomer = null;
-  saveAllData();
-  renderTempCustomer();
-  renderCustomerList();
-  generateOrderDetails();
-}
-// New function: Display Order ID and Order Date
-function generateOrderDetails(orderId = null, orderDate = null, orderTime = null) {
-  const orderIdElem = document.getElementById('order_id');
-  const orderDateElem = document.getElementById('order_date');
-  const orderTimeElem = document.getElementById('order_time');
-  if (!orderIdElem || !orderDateElem || !orderTimeElem) return;
 
-  const now = new Date();
 
-  if (!orderId) {
-    orderId = 'ORD-' + Date.now();
-  }
-  if (!orderDate) {
 
-    orderDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
-  }
-  orderIdElem.textContent = orderId;
-  orderDateElem.textContent = orderDate;
+      li.textContent = `${tempCustomer.name} - ${tempCustomer.phone} - ${tempCustomer.address} - ${tempOldOrderId(tempCustomer.orderId)}`;
+      li.style.padding = "5px 10px";
+      li.style.border = "1px solid #ddd";
+      li.style.marginTop = "5px";
+      tempList.appendChild(li);
 
-  function updateTime() {
-    if (!orderTime) {
-
-      let hours = now.getHours();
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-
-      hours = hours % 12;
-      hours = hours ? hours : 12; // convert 0 to 12
-
-      const time = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
-
-      orderTimeElem.textContent = time;
     }
   }
-  updateTime();
-  setInterval(updateTime, 1000)
-}
 
-// Place order and save permanently
+  // ================================
+  // Clear inputs and temp data
 
-function placeCheckout() {
-  if (tempSelectItem.length === 0) {
-    alert("No items selected.");
-    return;
-  }
-
-  const phone = document.getElementById("inputPhoneNumber").value.trim();
-  const name = document.getElementById("inputName").value.trim();
-  const address = document.getElementById("inputAddress").value.trim();
-  const email = document.getElementById("inputEmail").value.trim();
-
-  if (!phone || !name || !address || !email) {
-    alert("Please complete customer details.");
-    return;
-  }
-
-  let total = 0;
-  let productSpecificBestDiscountAmount = 0;
-
-  tempSelectItem.forEach(i => {
-    total += i.price * i.qty;
-    const prodDiscPercent = productDiscounts[i.name] || 0;
-    const prodDiscAmount = (i.price * i.qty) * (prodDiscPercent / 100);
-    if (prodDiscAmount > productSpecificBestDiscountAmount) {
-      productSpecificBestDiscountAmount = prodDiscAmount;
+  function Clear() {
+    document.getElementById("inputPhoneNumber").value = '';
+    document.getElementById("inputName").value = '';
+    document.getElementById("inputAddress").value = '';
+    document.getElementById("inputEmail").value = '';
+    const discountField = document.getElementById("inputDiscount");
+    if (discountField) {
+      discountField.value = '';
+      discountField.disabled = false;
     }
-  });
-
-  const discountPercent = getDiscountForPhone(phone);
-  const totalQty = tempSelectItem.reduce((sum, i) => sum + i.qty, 0);
-  const qtyDiscountAmount = totalQty >= 5 ? total * 0.05 : 0;
-  const oldOrManualDiscountAmount = total * (discountPercent / 100);
-
-  let bestDiscountAmount = 0;
-  let discountType = '';
-
-  if (productSpecificBestDiscountAmount > bestDiscountAmount) {
-    bestDiscountAmount = productSpecificBestDiscountAmount;
-    discountType = 'Product Specific Discount';
+    document.getElementById("inputCustomerID").value = '';
+    tempCustomer = null;
+    saveAllData();
+    renderTempCustomer();
+    renderCustomerList();
+    generateOrderDetails();
   }
-  if (qtyDiscountAmount > bestDiscountAmount) {
-    bestDiscountAmount = qtyDiscountAmount;
-    discountType = 'Quantity Discount (5% for 5+ items)';
+  // New function: Display Order ID and Order Date
+  function generateOrderDetails(orderId = null, orderDate = null, orderTime = null) {
+    const orderIdElem = document.getElementById('order_id');
+    const orderDateElem = document.getElementById('order_date');
+    const orderTimeElem = document.getElementById('order_time');
+    if (!orderIdElem || !orderDateElem || !orderTimeElem) return;
+
+    const now = new Date();
+
+    if (!orderId) {
+      orderId = 'ORD-' + Date.now();
+    }
+    if (!orderDate) {
+
+      orderDate = now.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+    }
+    orderIdElem.textContent = orderId;
+    orderDateElem.textContent = orderDate;
+
+    function updateTime() {
+      if (!orderTime) {
+
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; // convert 0 to 12
+
+        const time = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+
+        orderTimeElem.textContent = time;
+      }
+    }
+    updateTime();
+    setInterval(updateTime, 1000)
   }
-  if (oldOrManualDiscountAmount > bestDiscountAmount) {
-    bestDiscountAmount = oldOrManualDiscountAmount;
-    discountType = discountPercent === 10 ? 'Old Customer Discount (10%)' : 'Manual Discount';
+  // ================================
+  // Place order and save permanently
+
+  function placeCheckout() {
+    if (tempSelectItem.length === 0) {
+      alert("No items selected.");
+      return;
+    }
+
+    const phone = document.getElementById("inputPhoneNumber").value.trim();
+    const name = document.getElementById("inputName").value.trim();
+    const address = document.getElementById("inputAddress").value.trim();
+    const email = document.getElementById("inputEmail").value.trim();
+
+    if (!phone || !name || !address || !email) {
+      alert("Please complete customer details.");
+      return;
+    }
+
+    let total = 0;
+    let productSpecificBestDiscountAmount = 0;
+
+    tempSelectItem.forEach(i => {
+      total += i.price * i.qty;
+      const prodDiscPercent = productDiscounts[i.name] || 0;
+      const prodDiscAmount = (i.price * i.qty) * (prodDiscPercent / 100);
+      if (prodDiscAmount > productSpecificBestDiscountAmount) {
+        productSpecificBestDiscountAmount = prodDiscAmount;
+      }
+    });
+
+    const discountPercent = getDiscountForPhone(phone);
+    const totalQty = tempSelectItem.reduce((sum, i) => sum + i.qty, 0);
+    const qtyDiscountAmount = totalQty >= 5 ? total * 0.05 : 0;
+    const oldOrManualDiscountAmount = total * (discountPercent / 100);
+
+    let bestDiscountAmount = 0;
+    let discountType = '';
+
+    if (productSpecificBestDiscountAmount > bestDiscountAmount) {
+      bestDiscountAmount = productSpecificBestDiscountAmount;
+      discountType = 'Product Specific Discount';
+    }
+    if (qtyDiscountAmount > bestDiscountAmount) {
+      bestDiscountAmount = qtyDiscountAmount;
+      discountType = 'Quantity Discount (5% for 5+ items)';
+    }
+    if (oldOrManualDiscountAmount > bestDiscountAmount) {
+      bestDiscountAmount = oldOrManualDiscountAmount;
+      discountType = discountPercent === 10 ? 'Old Customer Discount (10%)' : 'Manual Discount';
+    }
+
+    const finalPrice = total - bestDiscountAmount;
+
+    // Save new customer permanently if tempCustomer exists and not in customers
+    if (tempCustomer && !customers.find(c => c.phone === phone)) {
+      customers.push({
+        id: tempCustomer.id,
+        phone: tempCustomer.phone,
+        name: tempCustomer.name,
+        address: tempCustomer.address,
+        email: tempCustomer.email,
+        orderId: tempCustomer.orderId || null
+      });
+    }
+
+    // Create new order object
+    const newOrder = {
+      id: generateOrderId(),
+      customerId: customers.find(c => c.phone === phone)?.id || generateCustomerId(),
+      customerName: name,
+      customerPhone: phone,
+      customerAddress: address,
+      customerEmail: email,
+      orderDate: new Date().toISOString(),
+      items: tempSelectItem.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
+      total: total,
+      discount: bestDiscountAmount,
+      finalPrice: finalPrice,
+      discountType: discountType
+    };
+
+    orders.push(newOrder);
+
+    // Reset current order and temp customer
+    tempSelectItem = [];
+    tempCustomer = null;
+
+    alert(`Order placed successfully!\nOrder ID: ${newOrder.id}\nTotal to pay: LKR ${finalPrice.toFixed(2)}`);
+
+    Clear();
+    saveAllData();
+    filterAndDisplay();
+    addOrderDisplay();
+    renderCustomerList();
+
+    generateOrderDetails(newOrder.id, new Date(newOrder.orderDate).toLocaleDateString('en-GB'));
   }
 
-  const finalPrice = total - bestDiscountAmount;
+  // ================================
+  // Render full customer list
 
-  // Save new customer permanently if tempCustomer exists and not in customers
-  if (tempCustomer && !customers.find(c => c.phone === phone)) {
-    customers.push({
-      id: tempCustomer.id,
-      phone: tempCustomer.phone,
-      name: tempCustomer.name,
-      address: tempCustomer.address,
-      email: tempCustomer.email
+  function renderCustomerList() {
+    const container = document.getElementById('fullCustomerList');
+    if (!container) return;
+    container.innerHTML = '';
+
+    customers.forEach(cust => {
+      const div = document.createElement('div');
+      div.textContent = `${cust.name} (${cust.phone})`;
+      div.style.padding = '3px 5px';
+      div.style.borderBottom = '1px solid #ddd';
+      container.appendChild(div);
     });
   }
 
-  // Create new order object
-  const newOrder = {
-    id: generateOrderId(),
-    customerId: customers.find(c => c.phone === phone)?.id || generateCustomerId(),
-    customerName: name,
-    customerPhone: phone,
-    customerAddress: address,
-    customerEmail: email,
-    orderDate: new Date().toISOString(),
-    items: tempSelectItem.map(i => ({ name: i.name, price: i.price, qty: i.qty })),
-    total: total,
-    discount: bestDiscountAmount,
-    finalPrice: finalPrice,
-    discountType: discountType
+  // ================================
+  // Event listeners
+
+  window.onload = function () {
+    loadAllData();
+    filterAndDisplay();
+    addOrderDisplay();
+    renderCustomerList();
+    renderTempCustomer();
+    generateOrderDetails();
+
+    // Category buttons
+    document.querySelectorAll('button[data-category]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        tempCategory = btn.getAttribute('data-category');
+        document.querySelectorAll('button[data-category]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterAndDisplay();
+      });
+    });
+
+    // Search input
+    const searchInput = document.getElementById('searchBarInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchTerm = e.target.value;
+        filterAndDisplay();
+      });
+    }
+
+    // Phone input change
+    const phoneInput = document.getElementById('inputPhoneNumber');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', () => {
+        checkPhoneNumberCustomer();
+      });
+    }
+
+    // Discount input change
+    const discountInput = document.getElementById('inputDiscount');
+    if (discountInput) {
+      discountInput.addEventListener('input', () => {
+        onDiscountInputChange();
+      });
+    }
   };
-
-  orders.push(newOrder);
-  tempSelectItem.forEach(selectedItem => {
-    const product = mainProductList.find(p => p.name === selectedItem.name);
-    if (product) {
-      product.Qty -= selectedItem.qty;
-      if (product.Qty < 0) product.Qty = 0;
-    }
-  });
-
-  // Reset current order and temp customer
-  tempSelectItem = [];
-  tempCustomer = null;
-
-  alert(`Order placed successfully!\nOrder ID: ${newOrder.id}\nTotal to pay: LKR ${finalPrice.toFixed(2)}`);
-
-  Clear();
-  saveAllData();
-  filterAndDisplay();
-  addOrderDisplay();
-  renderCustomerList();
-
-  generateOrderDetails(newOrder.id, new Date(newOrder.orderDate).toLocaleDateString('en-GB'));
-}
-
-
-// Render full customer list
-
-function renderCustomerList() {
-  const container = document.getElementById('fullCustomerList');
-  if (!container) return;
-  container.innerHTML = '';
-
-  customers.forEach(cust => {
-    const div = document.createElement('div');
-    div.textContent = `${cust.name} (${cust.phone})`;
-    div.style.padding = '3px 5px';
-    div.style.borderBottom = '1px solid #ddd';
-    container.appendChild(div);
-  });
-}
-
-
-// Event listeners
-
-window.onload = function () {
-  loadAllData();
-  filterAndDisplay();
-  addOrderDisplay();
-  renderCustomerList();
-  renderTempCustomer();
-  generateOrderDetails();
-
-  // Category buttons
-  document.querySelectorAll('button[data-category]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      tempCategory = btn.getAttribute('data-category');
-      document.querySelectorAll('button[data-category]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filterAndDisplay();
-    });
-  });
-
-  // Search input
-  const searchInput = document.getElementById('searchBarInput');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchTerm = e.target.value;
-      filterAndDisplay();
-    });
-  }
-
-  // Phone input change
-  const phoneInput = document.getElementById('inputPhoneNumber');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', () => {
-      checkPhoneNumberCustomer();
-    });
-  }
-
-  // Discount input change
-  const discountInput = document.getElementById('inputDiscount');
-  if (discountInput) {
-    discountInput.addEventListener('input', () => {
-      onDiscountInputChange();
-    });
-  }
-};

@@ -2,156 +2,134 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body>
 
-    <!-- Product Pge Nave -->
+    <!-- Navigation -->
     <nav>
         <div class="main_logo">
             <div class="main_logo_row">
-                <img id="main_logo_image" src="" alt="Main Logo">
+                <img id="main_logo_image" src="" alt="Main Logo" />
             </div>
-            <!-- Product Page Main Hedder -->
             <div class="main_nav_row">
-                <a id="product_page_link" href="product__details.html">Product</a>
-                <a id="order_page_link" href="order__details.html">Order</a>
-                <a id="item_page_link" href="item__details.html">Item</a>
-                <a id="customer_page_link" href="item__details.html">Customer</a>
+                <a id="productPageLink" href="product__details.html">Product</a>
+                <a id="orderPageLink" href="order__details.html">Order</a>
+                <a id="itemPageLink" href="item__details.html">Item</a>
+                <a id="customerPageLink" href="customer_details.html">Customer</a>
             </div>
         </div>
     </nav>
 
-    <!-- Product Page Main Seccrion  -->
-
-
-
-    
+    <!-- Main Section -->
     <div class="main_section">
         <div class="main_section_row">
 
-            <!-- Product Page Main Catogory List  -->
-
+            <!-- Category Buttons -->
             <div class="main_category_section_col_1">
-
                 <div class="main_category_section_col">
-                    <button id="all_category_button" data-category="all">
-                        All
-                    </button>
-
-                    <button id="all_category_button" data-category="burgers">
-                        Burgers
-                    </button>
-                    <button id="all_category_button" data-category="friesAndSides">
-                        Fries & Sides
-                    </button>
-                    <button id="all_category_button" data-category="drinks">
-                        Drinks
-                    </button>
-                    <button id="all_category_button" data-category="desserts">
-                        Desserts
-                    </button>
-                    <button id="all_category_button" data-category="kidsMenu">
-                        Kids Menu
-                    </button>
-                    <button id="all_category_button" data-category="saladsAndWraps">
-                        Salads & Wraps
-                    </button>
-
+                    <button type="button" data-category="all">All</button>
+                    <button type="button" data-category="burgers">Burgers</button>
+                    <button type="button" data-category="friesAndSides">Fries &amp; Sides</button>
+                    <button type="button" data-category="drinks">Drinks</button>
+                    <button type="button" data-category="desserts">Desserts</button>
+                    <button type="button" data-category="kidsMenu">Kids Menu</button>
+                    <button type="button" data-category="saladsAndWraps">Salads &amp; Wraps</button>
                 </div>
 
-                <!-- Search Bar  -->
-                <div class="search_input_class" >
-
-                    <input id="serchBarInput" type="text" placeholder="Search Product">
-                    <i class="fas fa-ice-cream me-1"></i>
+                <!-- Search Bar -->
+                <div class="search_input_class">
+                    <input id="searchBarInput" type="text" placeholder="Search Product" aria-label="Search Product" />
+                    <i class="fas fa-search" aria-hidden="true"></i>
                 </div>
             </div>
 
-            <!-- Main Product List Item  -->
-
+            <!-- Product Display Section -->
             <div class="main_product_list">
-                <div id="mainProductList">
-                </div>
+                <div id="mainProductList" class="d-flex flex-wrap gap-3"></div>
             </div>
 
-            <!-- Order Date And Order Id -->
-
-            <div class="order_dat_and_id_conainer">
-                <div class="order_dat_and_id_row">
-                    <div class="order_dat_col">
-                        <span id="order_date_title"> Date :- </span>
+            <!-- Order Date and ID -->
+            <div class="order_date_and_id_container">
+                <div class="order_date_and_id_row">
+                    <div class="order_date_col">
+                        <span id="order_date_title">Date:</span>
                         <span id="order_date"></span>
                     </div>
-                    <!-- Order Id -->
+                    <div class="order_time_col">
+                        <span id="order_time_title">Time:</span>
+                        <span id="order_time"></span>
+                    </div>
                     <div class="order_id_col">
-                        <span id="order_id_title">Order Id :-</span>
+                        <span id="order_id_title">Order ID:</span>
                         <span id="order_id"></span>
                     </div>
                 </div>
 
-                <hr>
-                <!-- Add Customer Details Input  -->
-                <div class="customer_datailse_get">
-                    <h2 id="add_customer_title"> Customer Information </h2>
+                <hr />
 
-                    <div id="input_phoneNumber_row">
-                        <input id="input_phoneNumber" type="text" name="" placeholder="Mobile Number">
-                    </div>
+                <!-- Customer Info Section -->
+                <div class="customer_details_get">
+                    <h2 id="add_customer_title">Customer Information</h2>
 
-                    <div id="input_name_row">
-                        <input id="input_name" type="text" name="" placeholder="Customer Name">
-                    </div>
+                    <label for="inputCustomerID" class="visually-hidden">Customer ID</label>
+                    <input type="text" id="inputCustomerID" placeholder="Customer ID" readonly />
 
-                    <div id="input_address_row">
-                        <input id="input_address" type="text" name="" placeholder="Address">
-                    </div>
+                    <label for="inputPhoneNumber" class="visually-hidden">Mobile Number</label>
+                    <input id="inputPhoneNumber" type="text" placeholder="Mobile Number" list="phoneList" />
+                    <datalist id="phoneList"></datalist>
 
-                    <div id="input_email_row">
-                        <input id="input_email" type="email" name="" placeholder="Email">
-                    </div>
+                    <label for="inputName" class="visually-hidden">Customer Name</label>
+                    <input id="inputName" type="text" placeholder="Customer Name" />
+
+                    <label for="inputAddress" class="visually-hidden">Address</label>
+                    <input id="inputAddress" type="text" placeholder="Address" />
+
+                    <label for="inputEmail" class="visually-hidden">Email</label>
+                    <input id="inputEmail" type="email" placeholder="Email" />
                 </div>
 
-                <!-- Add Customer And Clear Button -->
-                <div class="add_customer_and_clear_button_row">
-                    <input id="add_new_customer_button" type="button" value="Add Customer" onclick="addNewCustomer()">
-                    <input id="customer_clear" type="button" value="Clear" onclick="Clear">
+                <!-- Customer Buttons -->
+                <div class="add_customer_and_clear_button_row mt-2">
+                    <div class="add_customer_and_clear_button_row">
+                        <input id="add_new_customer_button" type="button" value="Add Customer" onclick="addNewCustomer()">
+                        <input id="customer_clear" type="button" value="Clear" onclick="Clear()">
+                    </div>
+
+                    <!-- Temporary Customer Display List -->
+                    <ul id="tempCustomerList" style="margin-top: 10px; list-style: none; padding-left: 0;"></ul>
                 </div>
             </div>
 
-            <!-- Customer Choice Item -->
+            <!-- Selected Order Items -->
+            <div id="customerChoiceItem" class="mt-4"></div>
 
-            <div id="customer_choice_item">
-
-            </div>
-
-            <!-- Totale And Checkout -->
-
-            <div class="totale_and_checkout">
-
-                <hr>
-                <dir class="total_count_col">
-                    <span id="totale_text">Total :</span>
-                    <span id="totale_count">LKR 0.00</span>
-                </dir>
-
-                <hr>
-
-                <div class="checkout_main" >
-                    <button id="checkout_button" onclick="placeCheckout()" >
-                        Checkout
-                    </button>
+            <!-- Total and Checkout -->
+            <div class="total_and_checkout mt-3">
+                <hr />
+                <div class="dicount">
+                    <label for="inputDiscount" class="visually-hidden">Discount</label>
+                    <input type="text" id="inputDiscount" placeholder="Enter Discount (e.g., 5%)" />
+                </div>
+                <div class="total_count_col">
+                    <span id="total_text">Total:</span>
+                    <span id="totalCount">LKR 0.00</span>
+                </div>
+                <hr />
+                <div class="checkout_main">
+                    <button id="checkout_button" type="button" onclick="placeCheckout()">Checkout</button>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- JS script -->
     <script src="product__details.js"></script>
 </body>
+
 </html>
