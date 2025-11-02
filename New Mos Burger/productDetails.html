@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Product Pge Nave -->
+    <nav>
+        <div class="main_logo">
+            <div class="main_logo_row">
+                <img id="main_logo_image" src="" alt="Main Logo">
+            </div>
+            <!-- Product Page Main Hedder -->
+            <div class="main_nav_row">
+                <a id="productPageLink" href="productDetails.html">Product</a>
+                <a id="orderPageLink" href="orderDetails.html">Order</a>
+                <a id="itemPageLink" href="itemDetails.html">Item</a>
+                <a id="customerPageLink" href="customerDetails.html">Customer</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Page Main Seccrion  -->
+
+
+
+
+    <div class="main_section">
+        <div class="main_section_row">
+
+            <!-- Product Page Main Catogory List  -->
+
+            <div class="main_category_section_col_1">
+
+                <div class="main_category_section_col">
+                    <button id="all_category_button" data-category="all">
+                        All
+                    </button>
+
+                    <button id="all_category_button" data-category="burgers">
+                        Burgers
+                    </button>
+
+                    <button id="all_category_button" data-category="friesAndSides">
+                        Fries & Sides
+                    </button>
+
+                    <button id="all_category_button" data-category="drinks">
+                        Drinks
+                    </button>
+
+                    <button id="all_category_button" data-category="desserts">
+                        Desserts
+                    </button>
+
+                    <button id="all_category_button" data-category="kidsMenu">
+                        Kids Menu
+                    </button>
+
+                    <button id="all_category_button" data-category="saladsAndWraps">
+                        Salads & Wraps
+                    </button>
+
+                </div>
+
+                <!-- Search Bar  -->
+                <div class="search_input_class">
+
+                    <input id="serchBarInput" type="text" placeholder="Search Product">
+                    <i class="fas fa-ice-cream me-1"></i>
+                </div>
+            </div>
+
+            <!-- Main Product List Item  -->
+
+            <div class="main_product_list">
+                <div id="mainProductList">
+                </div>
+            </div>
+
+            <!-- Order Date And Order Id -->
+
+            <div class="order_dat_and_id_conainer">
+                <div class="order_dat_and_id_row">
+                    <div class="order_dat_col">
+                        <span id="order_date_title"> Date :- </span>
+                        <span id="order_date"></span>
+                    </div>
+                    <!-- Order Id -->
+                    <div class="order_id_col">
+                        <span id="order_id_title">Order Id :-</span>
+                        <span id="order_id"></span>
+                    </div>
+                </div>
+
+                <hr>
+                <!-- Add Customer Details Input  -->
+                <div class="customer_datailse_get">
+                    <h2 id="add_customer_title"> Customer Information </h2>
+
+                    <div id="input_phoneNumber_row">
+                        <input id="inputPhoneNumber" type="text" name="" placeholder="Mobile Number">
+                    </div>
+
+                    <div id="input_name_row">
+                        <input id="inputName" type="text" name="" placeholder="Customer Name">
+                    </div>
+
+                    <div id="input_address_row">
+                        <input id="inputAddress" type="text" name="" placeholder="Address">
+                    </div>
+
+                    <div id="input_email_row">
+                        <input id="inputEmail" type="email" name="" placeholder="Email">
+                    </div>
+                    <div>
+                        <input id="inputDiscount" type="text" readonly >
+                    </div>
+                    <div>
+                        <input id="inputCustemerID" type="text" readonly >
+                    </div>
+                </div>
+
+                <!-- Add Customer And Clear Button -->
+                <div class="add_customer_and_clear_button_row">
+                    <input id="add_new_customer_button" type="button" value="Add Customer" onclick="addNewCustomer()">
+                    <input id="customer_clear" type="button" value="Clear" onclick="Clear()">
+                </div>
+            </div>
+
+            <!-- Customer Choice Item -->
+
+            <div id="customerChoiceItem">
+
+            </div>
+
+            <!-- Totale And Checkout -->
+
+            <div class="totale_and_checkout">
+
+                <hr>
+                <dir class="total_count_col">
+                    <span id="totale_text">Total :</span>
+                    <span id="totaleCount">LKR 0.00</span>
+                </dir>
+
+                <hr>
+
+                <div class="checkout_main">
+                    <button id="checkout_button" onclick="placeCheckout()">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+   
+
+    <script src="productDetails.js"></script>
+</body>
+
+</html>

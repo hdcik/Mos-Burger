@@ -1,3 +1,5 @@
+// Product JSON
+
 // Load or init data
 let customers = [];
 let orders = [];

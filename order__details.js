@@ -1,3 +1,5 @@
+// order JS
+// 
 // Sample Order List (This can come from localStorage too)
 let orders = JSON.parse(localStorage.getItem("orderList")) || [
     { id: 1, customer: "John Doe", item: "Burger", quantity: 2 },

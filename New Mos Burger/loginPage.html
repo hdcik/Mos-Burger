@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- Login Page Main Tile  -->
+
+
+    <div class="main_login_form_page">
+        <div class="main_login_form_page_row">
+            <div class="main_login_form_page_col">
+                <h1 id="welcome_back">Welcome Back</h1>
+                <p id="sing_your_account">Sing Your Account</p>
+            </div>
+        </div>
+
+        <!-- Login Form Username -->
+
+        <form class="main_login_form">
+            <div class="main_login_form_username_row">
+                <div class="main_login_form_username_col">
+                    <input id="loginUsername" type="text" placeholder="Username">
+                </div>
+            </div>
+            <!-- Login form Password -->
+
+            <div class="main_login_form_password_row">
+                <div class="main_login_form_password_col">
+                    <input id="loginPassword" type="password" placeholder="Password">
+                </div>
+            </div>
+
+            <!-- Login Page Submit Button -->
+
+            <div class="main_login_form_submit_button_row">
+                <div class="main_login_form_submit_button_col">
+                    <input id="loginSubmitButton" type="button" value="Login" onclick="submitNow()">
+                </div>
+            </div>
+        </form>
+
+        <!-- Login Page Forgot Password -->
+
+        <div class="forgot_your_password">
+            <div class="forgot_your_password_row">
+                <div class="forgot_your_password_col">
+                    <a id="forgot_your_password_link" href="forgotPassword.js">Forgot your password?</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="loginDetails.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>
